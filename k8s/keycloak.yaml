@@ -1,0 +1,38 @@
+# kc secrets
+# Encode database username
+## echo -n 'your_database_username' | base64
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-secret
+type: Opaque
+data:
+  db_username: a2NhZG1pbg==
+  db_password: a2NhZG1pbg==
+
+---
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: kc
+spec:
+  instances: 1
+  db:
+    vendor: postgres
+    host: postgres
+    usernameSecret:
+      name: keycloak-secret
+      key: db_username
+    passwordSecret:
+      name: keycloak-secret
+      key: db_password
+  http:
+    httpEnabled: true
+    httpPort: 8180
+#    tlsSecret: example-tls-secret
+  hostname:
+    strict: false
+#    strictBackchannel: false
+#    hostname: localhost
+#  proxy:
+#    headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
