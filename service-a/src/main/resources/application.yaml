@@ -1,0 +1,53 @@
+server:
+  port: 9001
+  shutdown: graceful
+  tomcat:
+    connection-timeout: 10s
+    threads:
+      max: 15
+      min-spare: 5
+
+spring:
+  application:
+    name: service-a
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/ms
+  config:
+    import: "optional:configserver:"
+
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URL:http://localhost:8888}
+      username: ${CONFIG_SERVER_USERNAME:configUser}
+      password: ${CONFIG_SERVER_PASSWORD:configPassword}
+      request-connection-timeout: 1000
+      request-read-timeout: 1000
+      fail-fast: false
+#      retry:
+#        max-attempts: 3
+#        initial-interval: 1000
+#        max-interval: 1000
+#        multiplier: 1.1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    Root: INFO
+    org.springframework.security: DEBUG

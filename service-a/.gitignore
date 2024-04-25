@@ -25,7 +25,6 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.idea/*
 
 ### NetBeans ###
 /nbproject/private/
@@ -39,5 +38,3 @@ out/
 
 ### Kotlin ###
 .kotlin
-.idea/kotlinc.xml
-/.idea
