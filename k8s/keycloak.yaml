@@ -36,3 +36,4 @@ spec:
 #    hostname: localhost
 #  proxy:
 #    headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
+
