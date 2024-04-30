@@ -1,6 +1,5 @@
-package com.github.com.billygk.cloud.kt.service_a.config
+package com.github.com.billygk.cloud.kt.service_b.config
 
-import com.github.com.billygk.cloud.kt.service_a.controller.ServiceController
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
@@ -70,7 +69,6 @@ class SecurityConfig {
         jwtConverter.setJwtGrantedAuthoritiesConverter(RealmRoleConverter())
         return jwtConverter
     }
-
 
 }
 
