@@ -1,6 +1,5 @@
 package com.github.com.billygk.cloud.kt.service_a.config
 
-import com.github.com.billygk.cloud.kt.service_a.controller.ServiceController
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
@@ -15,7 +14,6 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
-import java.util.stream.Collectors
 
 
 @EnableWebSecurity
@@ -44,7 +42,7 @@ class SecurityConfig {
             authRegistry.anyRequest().authenticated()
         }
 
-        http.oauth2ResourceServer { obj: OAuth2ResourceServerConfigurer<HttpSecurity?> -> obj.jwt() }
+        http.oauth2ResourceServer { obj: OAuth2ResourceServerConfigurer<HttpSecurity?> -> obj.jwt { } }
             .sessionManagement { sessionManagement: SessionManagementConfigurer<HttpSecurity?> ->
                 sessionManagement.sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS
@@ -74,16 +72,11 @@ class SecurityConfig {
 
 }
 
-class RealmRoleConverter : Converter<Jwt?, Collection<GrantedAuthority?>?> {
+class RealmRoleConverter : Converter<Jwt, Collection<GrantedAuthority>> {
     override fun convert(jwt: Jwt): Collection<GrantedAuthority> {
-        val realmAccess = jwt.claims["realm_access"] as Map<String, List<String>>
-        return realmAccess["roles"]!!.stream()
-            .map { roleName: String -> "ROLE_$roleName" }
-            .map { role: String? ->
-                SimpleGrantedAuthority(
-                    role
-                )
-            }
-            .collect(Collectors.toList())
+        val roles = jwt.claims["realm_access"] as? Map<String, List<String>>?
+        return roles?.get("roles")?.map {
+            SimpleGrantedAuthority("ROLE_$it")
+        } ?: emptyList()
     }
 }

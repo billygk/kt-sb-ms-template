@@ -14,7 +14,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/ms
+          issuer-uri: ${KEYCLOAK_URL:http://127.0.0.1:8180}/realms/kt-sb
   config:
     import: "optional:configserver:"
 

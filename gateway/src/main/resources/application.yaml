@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: edge-service
+    name: gw-service
   lifecycle:
     timeout-per-shutdown-phase: 15s
   config:
@@ -77,8 +77,8 @@ spring:
   #    connection-timeout: 5s
   redis:
     connect-timeout: 2s
-    host: ${REDIS_HOST:localhost}
-    port: 6379
+    host: ${REDIS_HOST:127.0.0.1}
+    port: 30002
     timeout: 500ms
   session:
     store-type: redis
@@ -90,14 +90,14 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: ms-service-client
-            client-secret: 7vjyMTK6CgL51STg4EVDGznNqVNnSe6m
+            client-id: kt-gateway-service
+            client-secret: AlwxVen6b0vOW1cNkLUPgV29iujJmuiA
             authorization-grant-type: authorization_code
             scope: openid,roles
-#            redirect-uri: ${KEYCLOAK_URL:http://localhost:8180}/login/oauth2/code
+            # redirect-uri: ${KEYCLOAK_URL:http://127.0.0.1:8180}/login/oauth2/code
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8180}/realms/ms
+            issuer-uri: ${KEYCLOAK_URL:http://127.0.0.1:8180}/realms/kt-sb
             user-name-attribute: preferred_username
 #  sleuth:
 #    sampler:

@@ -15,9 +15,15 @@ nodes:
       - containerPort: 443
         hostPort: 443
         protocol: TCP
-      - containerPort: 5432
-        hostPort: 5432
+      - containerPort: 30001
+        hostPort: 30001
         protocol: TCP
-      - containerPort: 6379
-        hostPort: 6379
+      - containerPort: 30002
+        hostPort: 30002
+        protocol: TCP
+      - containerPort: 30003
+        hostPort: 30003
+        protocol: TCP
+      - containerPort: 30004
+        hostPort: 30004
         protocol: TCP

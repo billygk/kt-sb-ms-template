@@ -8,6 +8,7 @@ class GatewayApplicationTests {
 
 	@Test
 	fun contextLoads() {
+		assert(true)
 	}
 
 }
